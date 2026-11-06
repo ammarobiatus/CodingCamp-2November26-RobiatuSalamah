@@ -1,0 +1,561 @@
+﻿/* ============================================================
+   To-Do Life Dashboard — css/style.css
+   Satu file CSS, tidak ada file CSS tambahan.
+   ============================================================ */
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (VARIABLES)
+   ============================================================ */
+
+/* --- Light Mode (default) --- */
+:root {
+  /* Background */
+  --color-bg:          #f0f4f8;
+  --color-surface:     #ffffff;
+  --color-surface-alt: #f8fafc;
+
+  /* Text */
+  --color-text-primary:   #1a202c;
+  --color-text-secondary: #4a5568;
+  --color-text-muted:     #718096;
+  --color-text-completed: #a0aec0;
+
+  /* Accent / Brand */
+  --color-accent:         #4a7c59;
+  --color-accent-hover:   #3a6347;
+  --color-accent-text:    #ffffff;
+
+  /* Danger */
+  --color-danger:         #e53e3e;
+  --color-danger-hover:   #c53030;
+
+  /* Warning */
+  --color-warning-text:   #92400e;
+  --color-warning-bg:     #fffbeb;
+  --color-warning-border: #f6ad55;
+
+  /* Borders & Shadows */
+  --color-border:       #e2e8f0;
+  --color-shadow:       rgba(0, 0, 0, 0.08);
+  --color-input-bg:     #ffffff;
+  --color-input-border: #cbd5e0;
+
+  /* Shape */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --shadow-card: 0 2px 12px var(--color-shadow);
+
+  /* Spacing */
+  --gap-section: 1.5rem;
+  --pad-card:    1.5rem;
+
+  /* Typography */
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+/* --- Dark Mode Override --- */
+html.dark-mode {
+  --color-bg:          #1a202c;
+  --color-surface:     #2d3748;
+  --color-surface-alt: #374151;
+
+  --color-text-primary:   #f7fafc;
+  --color-text-secondary: #e2e8f0;
+  --color-text-muted:     #a0aec0;
+  --color-text-completed: #4a5568;
+
+  --color-accent:         #68d391;
+  --color-accent-hover:   #48bb78;
+  --color-accent-text:    #1a202c;
+
+  --color-danger:         #fc8181;
+  --color-danger-hover:   #f56565;
+
+  --color-warning-text:   #f6ad55;
+  --color-warning-bg:     #2d2a1e;
+  --color-warning-border: #744210;
+
+  --color-border:       #4a5568;
+  --color-shadow:       rgba(0, 0, 0, 0.35);
+  --color-input-bg:     #2d3748;
+  --color-input-border: #4a5568;
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] { display: none !important; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   3. LAYOUT — HEADER
+   ============================================================ */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--gap-section);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 4px var(--color-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.01em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ============================================================
+   4. LAYOUT — DASHBOARD GRID
+   ============================================================ */
+
+.dashboard-grid {
+  display: grid;
+  gap: var(--gap-section);
+  padding: var(--gap-section);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Desktop: 2 columns */
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Tablet: 1 column */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
+}
+
+/* Mobile: 1 column, compact */
+@media (max-width: 767px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+}
+
+/* ============================================================
+   5. WIDGET CARD (shared)
+   ============================================================ */
+
+.widget {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--pad-card);
+  border: 1px solid var(--color-border);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   6. CLOCK & GREETING WIDGET
+   ============================================================ */
+
+.widget-clock {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 130px;
+}
+
+.greeting-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.clock-time {
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  line-height: 1.1;
+}
+
+.clock-date {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   7. TIMER WIDGET
+   ============================================================ */
+
+.widget-timer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--color-accent);
+  padding: 0.5rem 0;
+}
+
+.timer-notification {
+  text-align: center;
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.timer-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.timer-custom-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input-narrow {
+  width: 90px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   8. TODO LIST WIDGET
+   ============================================================ */
+
+.widget-todo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* Scrollbar styling */
+.todo-list::-webkit-scrollbar { width: 4px; }
+.todo-list::-webkit-scrollbar-track { background: transparent; }
+.todo-list::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+.todo-item:hover {
+  background-color: var(--color-border);
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 0.95rem;
+  word-break: break-word;
+  color: var(--color-text-primary);
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  opacity: 0.55;
+  color: var(--color-text-completed);
+}
+
+.todo-edit-input {
+  flex: 1;
+  font-size: 0.95rem;
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.5rem;
+  outline: none;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   9. QUICK LINKS WIDGET
+   ============================================================ */
+
+.widget-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.input-row-links {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.links-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 40px;
+}
+
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.6rem;
+  font-size: 0.875rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.link-item:hover {
+  background-color: var(--color-border);
+}
+
+.link-anchor {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-anchor:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   10. BUTTONS
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+.btn-primary:hover { background-color: var(--color-accent-hover); }
+
+.btn-secondary {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+.btn-secondary:hover {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #fff;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.8rem;
+}
+.btn-danger:hover { background-color: var(--color-danger-hover); }
+
+.btn-sm {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.8rem;
+}
+
+.btn-icon {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.btn-icon:hover {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   11. FORM INPUTS
+   ============================================================ */
+
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.input-field {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.25s ease;
+}
+
+.input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(74, 124, 89, 0.2);
+}
+
+.input-label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   12. MESSAGES (error, warning, success)
+   ============================================================ */
+
+.msg {
+  font-size: 0.875rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid transparent;
+}
+
+.msg-error {
+  color: var(--color-danger);
+  background-color: rgba(229, 62, 62, 0.08);
+  border-left-color: var(--color-danger);
+}
+
+.msg-warning {
+  color: var(--color-warning-text);
+  background-color: var(--color-warning-bg);
+  border-left-color: var(--color-warning-border);
+}
+
+.msg-success {
+  color: var(--color-accent);
+  background-color: rgba(74, 124, 89, 0.08);
+  border-left-color: var(--color-accent);
+}
+
+/* ============================================================
+   13. FOOTER
+   ============================================================ */
+
+.app-footer {
+  text-align: center;
+  padding: 1.5rem var(--gap-section);
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   14. SCROLLBAR (global)
+   ============================================================ */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }

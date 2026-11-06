@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do Life Dashboard</title>
+
+  <!-- Anti-FOCT: terapkan tema SEBELUM CSS di-load -->
+  <script>
+    try {
+      if (localStorage.getItem('tdl_theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch(e) {}
+  </script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="header-left">
+      <h1 class="app-title">🗂️ Life Dashboard</h1>
+    </div>
+    <div class="header-right">
+      <button id="theme-toggle" class="btn-icon" aria-label="Ganti tema">🌙 Mode Gelap</button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="dashboard-grid">
+
+    <!-- WIDGET: Clock & Greeting -->
+    <section class="widget widget-clock" aria-label="Jam dan sapaan">
+      <div id="greeting-text" class="greeting-text">Selamat Datang</div>
+      <div id="clock-time" class="clock-time">00:00:00</div>
+      <div id="clock-date" class="clock-date">Memuat tanggal...</div>
+    </section>
+
+    <!-- WIDGET: Focus Timer (Pomodoro) -->
+    <section class="widget widget-timer" aria-label="Focus Timer">
+      <h2 class="widget-title">⏱️ Focus Timer</h2>
+
+      <div id="timer-display" class="timer-display" aria-live="polite">25:00</div>
+      <div id="timer-notification" class="timer-notification" hidden role="alert" aria-live="assertive">
+        🎉 Sesi selesai! Waktunya istirahat.
+      </div>
+
+      <div class="timer-controls">
+        <button id="timer-start" class="btn btn-primary">▶ Mulai</button>
+        <button id="timer-stop"  class="btn btn-secondary">⏸ Stop</button>
+        <button id="timer-reset" class="btn btn-secondary">↩ Reset</button>
+      </div>
+
+      <div class="timer-custom">
+        <label for="timer-duration-input" class="input-label">Atur durasi (menit):</label>
+        <div class="timer-custom-row">
+          <input id="timer-duration-input" type="number" min="1" max="120"
+                 placeholder="1 – 120" aria-label="Durasi timer dalam menit" class="input-field input-narrow" />
+          <button id="timer-apply" class="btn btn-secondary">Terapkan</button>
+        </div>
+      </div>
+      <p id="timer-error" class="msg msg-error" hidden aria-live="polite"></p>
+    </section>
+
+    <!-- WIDGET: To-Do List -->
+    <section class="widget widget-todo" aria-label="Daftar Tugas">
+      <h2 class="widget-title">✅ Daftar Tugas</h2>
+
+      <div class="input-row">
+        <input id="todo-input" type="text" placeholder="Tambah tugas baru..."
+               aria-label="Teks tugas baru" class="input-field" />
+        <button id="todo-add" class="btn btn-primary" aria-label="Tambah tugas">+ Tambah</button>
+      </div>
+      <p id="todo-warning" class="msg msg-warning" hidden aria-live="polite"></p>
+
+      <ul id="todo-list" class="todo-list" aria-label="Daftar tugas"></ul>
+    </section>
+
+    <!-- WIDGET: Quick Links -->
+    <section class="widget widget-links" aria-label="Tautan Cepat">
+      <h2 class="widget-title">🔗 Tautan Cepat</h2>
+
+      <div class="input-row input-row-links">
+        <input id="link-name-input" type="text" placeholder="Nama tautan"
+               aria-label="Nama tautan" class="input-field" />
+        <input id="link-url-input" type="url" placeholder="https://..."
+               aria-label="URL tautan" class="input-field" />
+        <button id="link-add" class="btn btn-primary" aria-label="Tambah tautan">+ Tambah</button>
+      </div>
+      <p id="links-warning" class="msg msg-warning" hidden aria-live="polite"></p>
+
+      <div id="links-list" class="links-list" role="list" aria-label="Daftar tautan cepat"></div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>To-Do Life Dashboard &copy; 2026 — Robiatu Salamah</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
